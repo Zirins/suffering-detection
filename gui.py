@@ -433,7 +433,7 @@ def save_events_to_file(filename: str = "gui_events.json") -> None:
         print(f"Error saving events: {e}")
 
 # ----------------------------
-# Original GUI.py functions
+# Original gui.py functions
 # ----------------------------
 
 def normalize_text(s: str) -> str:
@@ -637,7 +637,7 @@ def run_follow_foreground(poll_sec: float, min_len: int, print_banner: bool) -> 
     keyboard_listener = start_keyboard_listener(record_text=True)
 
     last_hwnd = None
-    ocr_programs = ["Mozilla Firefox", "Google Chrome", "Microsoft Edge", "GUI.py"]
+    ocr_programs = ["Mozilla Firefox", "Google Chrome", "Microsoft Edge", "gui.py"]
     last_snapshot_key = None
     program_timer = 0
 
