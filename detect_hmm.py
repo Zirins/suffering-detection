@@ -24,26 +24,62 @@ from pathlib import Path
 
 # ---- Keep these helpers consistent with hmm_train.py ----
 
-def map_kind(t: str | None) -> str:
-    t = (t or "").lower()
-    if t in ("start", "navigation"): return "screen"
-    if t == "menu": return "menu"
-    if t == "action": return "action"
+def map_kind(node: dict | None) -> str:
+    """
+    Pass the WHOLE node dict here (not node['type']).
+    For menu/action, use the node's label; for start/navigation map to 'screen'.
+    """
+    if not isinstance(node, dict):
+        return "unknown"
+    node_type = (node.get("type") or "").lower()
+    label = normalize_label(node.get("label") or "")
+
+    if node_type in ("menu", "action"):
+        # prefer the semantic label (e.g., 'file menu', 'bold button')
+        return label or node_type
+    if node_type in ("start", "navigation"):
+        return "screen"
     return "unknown"
+
+
+def normalize_label(label: str | None) -> str:
+    if not label:
+        return "unknown"
+    label = label.strip().lower()
+    label = re.sub(r"\s+", " ", label)
+    return label
 
 def bucket(s: str | None, maxlen=24) -> str:
     s = (s or "").strip().lower()
     s = re.sub(r"\s+", " ", s)
-    s = re.sub(r"[^a-z0-9 _\\-\\.:/\\\\]", "", s)
+    s = re.sub(r"[^a-z0-9 _\-\.:/\\]", "", s)
     return s[:maxlen] if s else "∅"
 
+def bucket_window(w: str | None) -> str:
+    # keep stable part of titles: drop paths/suffixes
+    s = (w or "").lower()
+    s = re.sub(r"[a-z]:[/\\].*", "", s)   # drop "c:\...\..." tail
+    s = re.sub(r".*[/\\]", "", s)         # keep basename if pathy
+    s = s.split(" - ")[0]                 # keep left of " - "
+    return bucket(s, maxlen=20)
+
+def bucket_action(a: str | None) -> str:
+    a = (a or "").lower()
+    a = a.replace("user clicked on", "clicked")
+    a = a.replace("user clicked", "clicked")
+    a = re.sub(r"'([^']+)'", r"\1", a)
+    return bucket(a, maxlen=28)
+
 def edge_to_observation(edge: dict, nodes_by_id: dict) -> str:
-    src = nodes_by_id.get(edge.get("from"), {})
-    dst = nodes_by_id.get(edge.get("to"), {})
-    src_kind = map_kind(src.get("type"))
-    dst_kind = map_kind(dst.get("type"))
-    action_b = bucket(edge.get("action"))
-    window_b = bucket(dst.get("window") or dst.get("label"))
+    # NOTE: pass dicts to map_kind (not strings)
+    src = nodes_by_id.get(edge.get("from"))
+    dst = nodes_by_id.get(edge.get("to"))
+    src_kind = map_kind(src)
+    dst_kind = map_kind(dst)
+
+    window_b = bucket_window((dst or {}).get("window") or (dst or {}).get("label") or (dst or {}).get("element_type"))
+    action_b = bucket_action(edge.get("action"))
+
     return f"{src_kind}->{dst_kind}|{window_b}|{action_b}"
 
 def load_session(path: str):

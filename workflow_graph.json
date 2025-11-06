@@ -1,16 +1,18 @@
 {
   "metadata": {
-    "generated_at": "2025-10-08T20:24:55.722776",
+    "generated_at": "2025-10-09T02:46:45.477671",
     "source": "WorkflowInterpreter",
     "statistics": {
-      "total_nodes": 2,
-      "total_edges": 1,
+      "total_nodes": 7,
+      "total_edges": 6,
       "node_types": {
         "start": 1,
+        "action": 4,
+        "menu": 1,
         "navigation": 1
       },
-      "total_duration_ms": 0,
-      "avg_transition_time_ms": 0.0
+      "total_duration_ms": 14808,
+      "avg_transition_time_ms": 2468.0
     }
   },
   "nodes": [
@@ -18,23 +20,113 @@
       "id": "state_1",
       "label": "Application Start",
       "type": "start",
-      "timestamp": "2025-10-06T19:40:41.025023"
+      "timestamp": "2025-10-09T02:46:01.783696"
     },
     {
       "id": "state_2",
-      "label": "On suffering-detection – interpreter.py window",
-      "type": "navigation",
-      "timestamp": "2025-10-06T19:40:41.025023",
-      "element_type": "Window",
-      "window": "suffering-detection – interpreter.py",
+      "label": "Cancel button",
+      "type": "action",
+      "timestamp": "2025-10-09T02:46:07.114902",
+      "element_type": "Button",
+      "window": "Cancel",
       "position": {
-        "x": 2038,
-        "y": 26
+        "x": 1949,
+        "y": 752
       },
       "patterns": {
         "is_rage_click": false,
         "is_retry": false,
-        "delay_from_last": 0,
+        "delay_from_last": 5.331206,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "id": "state_3",
+      "label": "File menu",
+      "type": "menu",
+      "timestamp": "2025-10-09T02:46:07.819384",
+      "element_type": "MenuItem",
+      "window": "",
+      "position": {
+        "x": 563,
+        "y": 105
+      },
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 0.704482,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "id": "state_4",
+      "label": "Save button",
+      "type": "action",
+      "timestamp": "2025-10-09T02:46:11.429721",
+      "element_type": "Button",
+      "window": "&Save",
+      "position": {
+        "x": 1804,
+        "y": 757
+      },
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 2.175512,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "id": "state_5",
+      "label": "Minimize button",
+      "type": "action",
+      "timestamp": "2025-10-09T02:46:13.530454",
+      "element_type": "Button",
+      "window": "test.txt - Notepad",
+      "position": {
+        "x": 2233,
+        "y": 41
+      },
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 2.100733,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "id": "state_6",
+      "label": "Close button",
+      "type": "action",
+      "timestamp": "2025-10-09T02:46:15.578781",
+      "element_type": "Button",
+      "window": "test.txt - Notepad",
+      "position": {
+        "x": 2375,
+        "y": 41
+      },
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 2.048327,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "id": "state_7",
+      "label": "On suffering-detection – gui.py window",
+      "type": "navigation",
+      "timestamp": "2025-10-09T02:46:16.594751",
+      "element_type": "Window",
+      "window": "suffering-detection – gui.py",
+      "position": {
+        "x": 2032,
+        "y": 30
+      },
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 1.01597,
         "click_count_in_area": 1
       }
     }
@@ -44,9 +136,49 @@
       "id": "edge_1",
       "from": "state_1",
       "to": "state_2",
-      "action": "User clicked on 'suffering-detection – interpreter.py' window",
-      "timestamp": "2025-10-06T19:40:41.025023",
-      "duration_ms": 0
+      "action": "User clicked 'Cancel' button",
+      "timestamp": "2025-10-09T02:46:07.114902",
+      "duration_ms": 5331
+    },
+    {
+      "id": "edge_2",
+      "from": "state_2",
+      "to": "state_3",
+      "action": "User clicked 'File' menu",
+      "timestamp": "2025-10-09T02:46:07.819384",
+      "duration_ms": 704
+    },
+    {
+      "id": "edge_3",
+      "from": "state_3",
+      "to": "state_4",
+      "action": "User clicked 'Save' button",
+      "timestamp": "2025-10-09T02:46:11.429721",
+      "duration_ms": 3610
+    },
+    {
+      "id": "edge_4",
+      "from": "state_4",
+      "to": "state_5",
+      "action": "User clicked 'Minimize' button",
+      "timestamp": "2025-10-09T02:46:13.530454",
+      "duration_ms": 2100
+    },
+    {
+      "id": "edge_5",
+      "from": "state_5",
+      "to": "state_6",
+      "action": "User clicked 'Close' button",
+      "timestamp": "2025-10-09T02:46:15.578781",
+      "duration_ms": 2048
+    },
+    {
+      "id": "edge_6",
+      "from": "state_6",
+      "to": "state_7",
+      "action": "User clicked on 'suffering-detection – gui.py' window",
+      "timestamp": "2025-10-09T02:46:16.594751",
+      "duration_ms": 1015
     }
   ],
   "workflows": [
@@ -58,6 +190,18 @@
       ],
       "start": "state_1",
       "end": "state_2"
+    },
+    {
+      "id": "workflow_2",
+      "states": [
+        "state_3",
+        "state_4",
+        "state_5",
+        "state_6",
+        "state_7"
+      ],
+      "start": "state_3",
+      "end": "state_7"
     }
   ]
 }

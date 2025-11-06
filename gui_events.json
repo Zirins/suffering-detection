@@ -6,28 +6,403 @@
   },
   "mouse_events": [
     {
-      "timestamp": "2025-10-06T19:40:41.025023",
+      "timestamp": "2025-10-09T02:46:01.783696",
       "type": "mouse_click",
       "button": "Button.left",
       "position": {
-        "x": 2038,
-        "y": 26
+        "x": 1681,
+        "y": 847
       },
       "element": {
-        "type": "Window",
-        "name": "suffering-detection – interpreter.py",
-        "window": "suffering-detection – interpreter.py",
-        "element": "SunAwtFrame"
+        "type": "Document",
+        "name": "Text editor",
+        "window": "",
+        "element": "RichEditD2DPT"
       },
-      "action_description": "User clicked on 'suffering-detection – interpreter.py' window",
+      "action_description": "User clicked 'Text editor' (Document)",
       "patterns": {
         "is_rage_click": false,
         "is_retry": false,
         "delay_from_last": 0,
         "click_count_in_area": 1
       }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:07.114902",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 1949,
+        "y": 752
+      },
+      "element": {
+        "type": "Button",
+        "name": "Cancel",
+        "window": "Cancel",
+        "element": "Button"
+      },
+      "action_description": "User clicked 'Cancel' button",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 5.331206,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:07.819384",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 563,
+        "y": 105
+      },
+      "element": {
+        "type": "MenuItem",
+        "name": "File",
+        "window": "",
+        "element": "Microsoft.UI.Xaml.Controls.MenuBarItem"
+      },
+      "action_description": "User clicked 'File' menu",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 0.704482,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:09.254209",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 665,
+        "y": 440
+      },
+      "element": {
+        "type": "Text",
+        "name": "Save as",
+        "window": "PopupHost",
+        "element": "TextBlock"
+      },
+      "action_description": "User clicked 'Save as' (Text)",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 1.434825,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:11.429721",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 1804,
+        "y": 757
+      },
+      "element": {
+        "type": "Button",
+        "name": "Save",
+        "window": "&Save",
+        "element": "Button"
+      },
+      "action_description": "User clicked 'Save' button",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 2.175512,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:13.530454",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 2233,
+        "y": 41
+      },
+      "element": {
+        "type": "Button",
+        "name": "Minimize",
+        "window": "test.txt - Notepad",
+        "element": ""
+      },
+      "action_description": "User clicked 'Minimize' button",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 2.100733,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:15.578781",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 2375,
+        "y": 41
+      },
+      "element": {
+        "type": "Button",
+        "name": "Close",
+        "window": "test.txt - Notepad",
+        "element": ""
+      },
+      "action_description": "User clicked 'Close' button",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 2.048327,
+        "click_count_in_area": 1
+      }
+    },
+    {
+      "timestamp": "2025-10-09T02:46:16.594751",
+      "type": "mouse_click",
+      "button": "Button.left",
+      "position": {
+        "x": 2032,
+        "y": 30
+      },
+      "element": {
+        "type": "Window",
+        "name": "suffering-detection – gui.py",
+        "window": "suffering-detection – gui.py",
+        "element": "SunAwtFrame"
+      },
+      "action_description": "User clicked on 'suffering-detection – gui.py' window",
+      "patterns": {
+        "is_rage_click": false,
+        "is_retry": false,
+        "delay_from_last": 1.01597,
+        "click_count_in_area": 1
+      }
     }
   ],
-  "keyboard_events": [],
-  "element_cache_size": 1
+  "keyboard_events": [
+    {
+      "timestamp": "2025-10-09T02:46:02.975341",
+      "type": "keyboard_press",
+      "key": "Key.shift"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.198677",
+      "type": "keyboard_press",
+      "key": "H"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.218003",
+      "type": "keyboard_release",
+      "key": "Key.shift"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.247401",
+      "type": "keyboard_release",
+      "key": "h"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.266342",
+      "type": "keyboard_press",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.333785",
+      "type": "keyboard_release",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.341869",
+      "type": "keyboard_press",
+      "key": "l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.411943",
+      "type": "keyboard_release",
+      "key": "l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.478606",
+      "type": "keyboard_press",
+      "key": "l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.540066",
+      "type": "keyboard_release",
+      "key": "l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.622075",
+      "type": "keyboard_press",
+      "key": "o"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.625582",
+      "type": "keyboard_press",
+      "key": "9"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.667673",
+      "type": "keyboard_release",
+      "key": "9"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:03.672674",
+      "type": "keyboard_release",
+      "key": "o"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.241916",
+      "type": "keyboard_press",
+      "key": "Key.backspace"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.301365",
+      "type": "keyboard_release",
+      "key": "Key.backspace"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.355889",
+      "type": "keyboard_press",
+      "key": "Key.space"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.416920",
+      "type": "keyboard_release",
+      "key": "Key.space"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.435853",
+      "type": "keyboard_press",
+      "key": "t"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.460596",
+      "type": "keyboard_release",
+      "key": "t"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.491409",
+      "type": "keyboard_press",
+      "key": "h"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.519067",
+      "type": "keyboard_press",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.541649",
+      "type": "keyboard_release",
+      "key": "h"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.587045",
+      "type": "keyboard_press",
+      "key": "r"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.599217",
+      "type": "keyboard_release",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.652155",
+      "type": "keyboard_press",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.677761",
+      "type": "keyboard_release",
+      "key": "r"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:04.752278",
+      "type": "keyboard_release",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:05.072547",
+      "type": "keyboard_press",
+      "key": "Key.ctrl_l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:05.345718",
+      "type": "keyboard_press",
+      "key": "\u0013"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:05.431130",
+      "type": "keyboard_release",
+      "key": "\u0013"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:05.482984",
+      "type": "keyboard_release",
+      "key": "Key.ctrl_l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.344658",
+      "type": "keyboard_press",
+      "key": "t"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.409619",
+      "type": "keyboard_press",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.425851",
+      "type": "keyboard_release",
+      "key": "t"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.450285",
+      "type": "keyboard_press",
+      "key": "s"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.499155",
+      "type": "keyboard_press",
+      "key": "t"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.528267",
+      "type": "keyboard_release",
+      "key": "s"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.538865",
+      "type": "keyboard_release",
+      "key": "e"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:10.577579",
+      "type": "keyboard_release",
+      "key": "t"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:14.472799",
+      "type": "keyboard_press",
+      "key": "Key.alt_l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:14.507795",
+      "type": "keyboard_press",
+      "key": "Key.tab"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:14.540223",
+      "type": "keyboard_release",
+      "key": "Key.alt_l"
+    },
+    {
+      "timestamp": "2025-10-09T02:46:14.589829",
+      "type": "keyboard_release",
+      "key": "Key.tab"
+    }
+  ],
+  "element_cache_size": 8
 }
