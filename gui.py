@@ -69,6 +69,10 @@ def get_semantic_action(element_info: Dict[str, Any], button: Button) -> str:
 # ==============================================================
 
 def cache_element_position(x: int, y: int, element_info: Dict[str, Any]) -> None:
+    """
+    Save element info for each screen region.
+    Used later if app is frozen and we can't query UI directly.
+    """
     """Cache element info by screen region for fallback if UI query fails."""
     region_key = f"{x//10}_{y//10}"
     element_position_cache[region_key] = {
