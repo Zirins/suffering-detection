@@ -12,6 +12,9 @@ from typing import List, Dict, Any
 from collections import defaultdict
 import re
 
+from logger import get_logger
+log = get_logger("INTERPRETER")
+
 
 class WorkflowInterpreter:
     """
@@ -113,10 +116,10 @@ class WorkflowInterpreter:
         # Main loop — goes through events and builds the graph step by step
         mouse_events = events_data.get('mouse_events', [])
         if not mouse_events:
-            print("No mouse events to process")
+            # print("No mouse events to process")
             return
-
-        print(f"\nBuilding graph from {len(mouse_events)} events...")
+        log.debug("Building semantic graph.")
+        # print(f"\nBuilding graph from {len(mouse_events)} events...")
 
         # Start with an initial “App Start” node
         initial_node = {
@@ -170,7 +173,7 @@ class WorkflowInterpreter:
             self.current_state = node['id']
             self.state_history.append(node['id'])
 
-        print(f"Created {len(self.nodes)} nodes and {len(self.edges)} edges")
+        # print(f"Created {len(self.nodes)} nodes and {len(self.edges)} edges")
 
     def detect_workflows(self) -> List[Dict[str, Any]]:
         # Look for simple repeated patterns of user workflows
@@ -237,13 +240,13 @@ class WorkflowInterpreter:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(output, f, indent=2, ensure_ascii=False)
 
-        print(f"\nGraph exported to {filename}")
-        print(f"Stats:")
-        print(f"  Nodes: {stats['total_nodes']}")
-        print(f"  Edges: {stats['total_edges']}")
-        print(f"  Workflows: {len(workflows)}")
-        print(f"  Node types: {stats['node_types']}")
-        print(f"  Total duration: {stats['total_duration_ms']/1000:.2f}s")
+        # print(f"\nGraph exported to {filename}")
+        # print(f"Stats:")
+        # print(f"  Nodes: {stats['total_nodes']}")
+        # print(f"  Edges: {stats['total_edges']}")
+        # print(f"  Workflows: {len(workflows)}")
+        # print(f"  Node types: {stats['node_types']}")
+        # print(f"  Total duration: {stats['total_duration_ms']/1000:.2f}s")
 
     def print_graph_summary(self) -> None:
         # Quick readable summary of what got built

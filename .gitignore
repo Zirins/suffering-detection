@@ -1,0 +1,105 @@
+# =============================
+# PYTHON / ENVIRONMENT BASICS
+# =============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.pid
+*.tmp
+*.swp
+*.bak
+*.DS_Store
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+*.env
+*.venv
+
+# IDE / EDITOR JUNK
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# =============================
+# DATA / OUTPUT DIRECTORIES
+# =============================
+# Core pipeline outputs
+outputs/
+logs/
+data/
+sessions/
+workflows/
+alerts/
+models/
+checkpoints/
+
+# GUI event dumps
+gui_events.json
+workflow_graph.json
+hmm_results.json
+
+# Temporary captures
+*_capture.json
+*_session.json
+*_events.json
+*_tmp.json
+
+# =============================
+# MACHINE LEARNING ARTIFACTS
+# =============================
+# Model weights
+*.pth
+*.pt
+*.onnx
+*.h5
+*.ckpt
+
+# Training artifacts
+*.npz
+*.npy
+*.pkl
+*.joblib
+params.json
+*.bin
+
+# =============================
+# SYSTEM / BUILD FILES
+# =============================
+dist/
+build/
+.eggs/
+*.egg-info/
+MANIFEST
+
+# =============================
+# OS / MISCELLANEOUS
+# =============================
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# =============================
+# NOTEBOOKS / EXPERIMENTAL
+# =============================
+.ipynb_checkpoints/
+*.ipynb
+
+# =============================
+# CREDENTIALS / SECRETS
+# =============================
+*.key
+*.pem
+*.crt
+*.cfg
+*.conf
+*.ini
+*.token
+*.secrets
