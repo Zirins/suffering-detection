@@ -10,6 +10,7 @@ from pynput.mouse import Button
 # GLOBAL STATE
 # ----------------------------
 
+EXIT_FLAG = False
 mouse_events = []
 keyboard_events = []
 element_position_cache = {}
@@ -253,13 +254,23 @@ def run_sensor_session(duration: int = 30) -> Dict[str, Any]:
     Run a full mouse + keyboard monitoring session for the given duration.
     Returns: { 'mouse_events': [...], 'keyboard_events': [...] }
     """
+    global EXIT_FLAG
+    EXIT_FLAG = False  # Reset flag
+
     print(f"\nStarting GUI action capture for {duration}s...\n")
+
 
     m_listener = start_mouse_listener()
     k_listener = start_keyboard_listener()
 
     try:
-        time.sleep(duration)
+        # Instead of blocking sleep, check flag in small intervals
+        start_time = time.time()
+        while time.time() - start_time < duration:
+            if EXIT_FLAG:
+                print("⏹ Exit requested, stopping capture...")
+                break
+            time.sleep(0.1)  # Check every 100ms
     except KeyboardInterrupt:
         print("⏹Interrupted manually.")
 

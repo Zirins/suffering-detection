@@ -74,7 +74,7 @@ def detect_with_heuristics(events, config=None):
 
     log.debug(f"Running heuristic detection on {len(events)} events")
 
-    #  1. RAGE CLICK DETECTION 
+    #  1. RAGE CLICK DETECTION
     click_positions = {}
     for e in events:
         if e.get('type') != 'mouse_click':
@@ -110,7 +110,7 @@ def detect_with_heuristics(events, config=None):
             except Exception as e:
                 log.error(f"Error processing rage click: {e}")
 
-    #  2. LONG HESITATION DETECTION 
+    #  2. LONG HESITATION DETECTION
     sorted_events = sorted(events, key=lambda e: e.get('timestamp', ''))
     for i in range(1, len(sorted_events)):
         try:
@@ -132,7 +132,7 @@ def detect_with_heuristics(events, config=None):
         except (ValueError, KeyError) as e:
             log.error(f"Error detecting hesitation: {e}")
 
-    #  3. RETRY PATTERN DETECTION 
+    #  3. RETRY PATTERN DETECTION
     # Look for same action repeated in short succession
     for i in range(1, len(sorted_events)):
         try:
@@ -162,7 +162,7 @@ def detect_with_heuristics(events, config=None):
         except Exception as e:
             log.error(f"Error detecting retry: {e}")
 
-    #  4. CLICK PATTERN ANALYSIS 
+    #  4. CLICK PATTERN ANALYSIS
     # Flag if there's anything weird from pattern detection (from gui.py)
     for e in events:
         patterns = e.get('patterns', {})
@@ -385,13 +385,14 @@ def main():
     def force_exit():
         print("\n🔥 Ctrl + F1 pressed. Exiting pipeline...\n")
         log.warning("Pipeline manually exited via Ctrl + F1")
+        import gui
+        gui.EXIT_FLAG = True
 
         # Restore Ctrl+C (Unix/Linux only)
         if os.name != 'nt':
             os.system("stty intr ^C")
 
         keyboard.unhook_all()
-        os._exit(0)
 
     keyboard.add_hotkey("ctrl+f1", force_exit)
 
@@ -419,7 +420,7 @@ def main():
 
     finally:
         if os.name != 'nt':
-            os.system("stty intr ^C")  # ALWAYS restore Ctrl+C
+            os.system("stty intr ^C")  # ALWAYS restore ctrl+c!
 
 
 
