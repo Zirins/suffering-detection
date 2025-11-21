@@ -19,6 +19,7 @@ import keyboard  # CTRL + F1 exit
 from logger import get_logger
 from gui import run_sensor_session
 from interpreter import WorkflowInterpreter
+from kb_mashing import SufferingDetector
 
 log = get_logger("PIPELINE")
 
@@ -277,6 +278,23 @@ def run_pipeline(duration=30, config=None):
 
         all_alerts = detect_with_heuristics(events.get("mouse_events", []), config=config)
 
+        # Keyboard mashing detection
+        log.info("Starting keyboard mashing detection")
+        detector = SufferingDetector(events)
+        keyboard_mash_result = detector.detect_keyboard_mashing(detector.keyboard_events)
+
+        if keyboard_mash_result["is_mash"]:
+            all_alerts.append({
+                'type': 'keyboard_mashing',
+                'severity': 'high',
+                'detected_by': 'ml_heuristic',
+                'confidence': keyboard_mash_result['mash_score'],
+                'features': keyboard_mash_result['features'],
+                'timestamp': detector.keyboard_events[-1]['timestamp'] if detector.keyboard_events else datetime.now().isoformat(),
+                'description': f"Keyboard mashing detected (score: {keyboard_mash_result['mash_score']:.2f})"
+            })
+            log.info(f"Keyboard mashing detected with score {keyboard_mash_result['mash_score']:.2f}")
+
         print(f"Detected {len(all_alerts)} anomalies")
         log.info(f"Detection complete: {len(all_alerts)} alerts")
 
@@ -383,7 +401,7 @@ def main():
 
     # CTRL + F1 EXIT
     def force_exit():
-        print("\n🔥 Ctrl + F1 pressed. Exiting pipeline...\n")
+        print("\nCtrl + F1 pressed. Exiting pipeline...\n")
         log.warning("Pipeline manually exited via Ctrl + F1")
         import gui
         gui.EXIT_FLAG = True
