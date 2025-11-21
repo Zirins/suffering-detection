@@ -6,9 +6,9 @@ from pywinauto import Desktop
 from pynput import mouse, keyboard
 from pynput.mouse import Button
 
-# ==============================================================
+# ----------------------------
 # GLOBAL STATE
-# ==============================================================
+# ----------------------------
 
 mouse_events = []
 keyboard_events = []
@@ -18,9 +18,9 @@ last_click_time = None
 last_click_pos = None
 
 
-# ==============================================================
+# ----------------------------
 # SEMANTIC ACTION DETECTION
-# ==============================================================
+# ----------------------------
 
 def get_semantic_action(element_info: Dict[str, Any], button: Button) -> str:
     """
@@ -64,9 +64,9 @@ def get_semantic_action(element_info: Dict[str, Any], button: Button) -> str:
     return f"User {button_str}-clicked '{elem_name}' in '{window}'"
 
 
-# ==============================================================
+# ----------------------------
 # ELEMENT CACHING
-# ==============================================================
+# ----------------------------
 
 def cache_element_position(x: int, y: int, element_info: Dict[str, Any]) -> None:
     """
@@ -104,9 +104,9 @@ def get_cached_element(x: int, y: int) -> Optional[Dict[str, Any]]:
     return None
 
 
-# ==============================================================
+# ----------------------------
 # ELEMENT DETECTION
-# ==============================================================
+# ----------------------------
 
 def get_element_at_position(x: int, y: int) -> Dict[str, Any]:
     """Detect UI element under mouse position using Win32 + Pywinauto."""
@@ -139,9 +139,9 @@ def get_element_at_position(x: int, y: int) -> Dict[str, Any]:
         return {"type": "error", "window": "unknown", "name": "", "error": str(e)}
 
 
-# ==============================================================
+# ----------------------------
 # CLICK PATTERN DETECTION
-# ==============================================================
+# ----------------------------
 
 def detect_click_pattern(x: int, y: int, timestamp: datetime) -> Dict[str, Any]:
     """Detect rage clicks, retries, or hesitation patterns."""
@@ -172,9 +172,9 @@ def detect_click_pattern(x: int, y: int, timestamp: datetime) -> Dict[str, Any]:
     return pattern
 
 
-# ==============================================================
+# ----------------------------
 # MOUSE EVENT HANDLING
-# ==============================================================
+# ----------------------------
 
 def on_mouse_click(x: int, y: int, button: Button, pressed: bool) -> None:
     """Callback for mouse clicks; capture and label events."""
@@ -207,9 +207,9 @@ def start_mouse_listener() -> mouse.Listener:
     return listener
 
 
-# ==============================================================
+# ----------------------------
 # KEYBOARD EVENT HANDLING
-# ==============================================================
+# ----------------------------
 
 def on_key_press(key) -> None:
     """Record key press events."""
@@ -244,16 +244,16 @@ def start_keyboard_listener() -> keyboard.Listener:
     return listener
 
 
-# ==============================================================
+# ----------------------------
 # RUNNER WRAPPER (For Pipeline Integration)
-# ==============================================================
+# ----------------------------
 
 def run_sensor_session(duration: int = 30) -> Dict[str, Any]:
     """
     Run a full mouse + keyboard monitoring session for the given duration.
     Returns: { 'mouse_events': [...], 'keyboard_events': [...] }
     """
-    print(f"\n🎯 Starting GUI action capture for {duration}s...\n")
+    print(f"\nStarting GUI action capture for {duration}s...\n")
 
     m_listener = start_mouse_listener()
     k_listener = start_keyboard_listener()
@@ -261,12 +261,12 @@ def run_sensor_session(duration: int = 30) -> Dict[str, Any]:
     try:
         time.sleep(duration)
     except KeyboardInterrupt:
-        print("⏹️  Interrupted manually.")
+        print("⏹Interrupted manually.")
 
     m_listener.stop()
     k_listener.stop()
 
-    print(f"\n✅ Capture complete: {len(mouse_events)} mouse events, {len(keyboard_events)} keyboard events.\n")
+    print(f"\nCapture complete: {len(mouse_events)} mouse events, {len(keyboard_events)} keyboard events.\n")
 
     return {
         "mouse_events": list(mouse_events),
@@ -274,9 +274,9 @@ def run_sensor_session(duration: int = 30) -> Dict[str, Any]:
     }
 
 
-# ==============================================================
+# ----------------------------
 # DEBUG MODE
-# ==============================================================
+# ----------------------------
 
 if __name__ == "__main__":
     data = run_sensor_session(duration=10)

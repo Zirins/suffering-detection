@@ -17,7 +17,7 @@ def get_logger(name: str = __name__):
             datefmt="%Y-%m-%d %H:%M:%S"
         )
 
-        fh = logging.FileHandler(log_path)
+        fh = logging.FileHandler(log_path, encoding='utf-8')
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)
         logger.addHandler(fh)
