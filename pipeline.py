@@ -11,6 +11,7 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 import signal
+import sys
 import os
 import keyboard  # CTRL + F1 exit
 
@@ -275,6 +276,7 @@ def run_pipeline(duration=30, config=None):
         print("\nRunning anomaly detection...")
         log.info("Starting heuristic detection")
 
+        # Mouse event heuristics
         all_alerts = detect_with_heuristics(events.get("mouse_events", []), config=config)
 
         # Keyboard mashing detection
@@ -293,6 +295,20 @@ def run_pipeline(duration=30, config=None):
                 'description': f"Keyboard mashing detected (score: {keyboard_mash_result['mash_score']:.2f})"
             })
             log.info(f"Keyboard mashing detected with score {keyboard_mash_result['mash_score']:.2f}")
+
+        # OCR cancellation detection
+        try:
+            from ocr_detection import CancellationDetector
+            log.info("Starting OCR cancellation detection")
+            ocr_detector = CancellationDetector()
+            ocr_alerts = ocr_detector.analyze_events(events.get("mouse_events", []))
+            if ocr_alerts:
+                all_alerts.extend(ocr_alerts)
+                log.info(f"OCR detected {len(ocr_alerts)} cancellation patterns")
+        except ImportError:
+            log.warning("OCR detection skipped: ocr_detection.py not found")
+        except Exception as e:
+            log.warning(f"OCR detection skipped: {e}")
 
         print(f"Detected {len(all_alerts)} anomalies")
         log.info(f"Detection complete: {len(all_alerts)} alerts")
@@ -400,16 +416,15 @@ def main():
 
     # CTRL + F1 EXIT
     def force_exit():
-        print("\nCtrl + F1 pressed. Exiting pipeline...\n")
+        print("\n🔥 Ctrl + F1 pressed. Exiting pipeline...\n")
         log.warning("Pipeline manually exited via Ctrl + F1")
-        import gui
-        gui.EXIT_FLAG = True
 
         # Restore Ctrl+C (Unix/Linux only)
         if os.name != 'nt':
             os.system("stty intr ^C")
 
         keyboard.unhook_all()
+        os._exit(0)
 
     keyboard.add_hotkey("ctrl+f1", force_exit)
 
@@ -437,7 +452,7 @@ def main():
 
     finally:
         if os.name != 'nt':
-            os.system("stty intr ^C")  # ALWAYS restore ctrl+c!
+            os.system("stty intr ^C")  # ALWAYS restore Ctrl+C
 
 
 
