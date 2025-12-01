@@ -11,7 +11,6 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 import signal
-import sys
 import os
 import keyboard  # CTRL + F1 exit
 
@@ -19,7 +18,7 @@ import keyboard  # CTRL + F1 exit
 from logger import get_logger
 from gui import run_sensor_session
 from interpreter import WorkflowInterpreter
-from kb_mashing import SufferingDetector
+from heuristics.kb_mashing import SufferingDetector
 
 log = get_logger("PIPELINE")
 
