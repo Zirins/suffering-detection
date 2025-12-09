@@ -1,4 +1,4 @@
-# New file: ocr_detection.py
+# New file: cancel_detection.py
 
 import pytesseract
 from PIL import ImageGrab, ImageOps

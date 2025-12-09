@@ -306,7 +306,7 @@ def run_pipeline(duration=30, config=None):
                 all_alerts.extend(ocr_alerts)
                 log.info(f"OCR detected {len(ocr_alerts)} cancellation patterns")
         except ImportError:
-            log.warning("OCR detection skipped: ocr_detection.py not found")
+            log.warning("OCR detection skipped: cancel_detection.py not found")
         except Exception as e:
             log.warning(f"OCR detection skipped: {e}")
 
