@@ -180,12 +180,11 @@ def detect_with_heuristics(events, config=None):
 
     return alerts
 
-
 # ----------------------------
 # PIPELINE RUNNER
 # ----------------------------
 
-def run_pipeline(duration=30, config=None):
+def run_pipeline(duration=10, config=None):
     """Main pipeline execution (no hmm yet, we'll add later)"""
     if config is None:
         config = PipelineConfig()
