@@ -5,6 +5,10 @@ import win32gui
 from pywinauto import Desktop
 from pynput import mouse, keyboard
 from pynput.mouse import Button
+import threading
+import ctypes
+import psutil
+from heuristics.app_switching_detection import monitor_app_switches
 
 # ----------------------------
 # GLOBAL STATE
@@ -17,6 +21,7 @@ element_position_cache = {}
 click_patterns = {}
 last_click_time = None
 last_click_pos = None
+app_switches = []
 
 
 # ----------------------------
@@ -244,44 +249,79 @@ def start_keyboard_listener() -> keyboard.Listener:
     listener.start()
     return listener
 
+# ----------------------------
+# APP SWITCH DETECTION
+# ----------------------------
+
+def monitor_apps_during_session(duration):
+    """Checks for app switches during the session."""
+    global app_switches
+
+    last_app = None
+    start = time.time()
+
+    while time.time() - start < duration:
+        # Get current app
+        hwnd = ctypes.windll.user32.GetForegroundWindow()
+        pid = ctypes.c_ulong(0)
+        ctypes.windll.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+
+        try:
+            process = psutil.Process(pid.value)
+            current_app = process.name().lower()
+
+            # Detect switch
+            if current_app != last_app and last_app is not None:
+                app_switches.append({
+                    'timestamp': datetime.now().isoformat(),
+                    'from': last_app,
+                    'to': current_app
+                })
+
+            last_app = current_app
+        except:
+            pass
+
+        time.sleep(2)
 
 # ----------------------------
 # RUNNER WRAPPER (For Pipeline Integration)
 # ----------------------------
 
-def run_sensor_session(duration: int = 30) -> Dict[str, Any]:
+def run_sensor_session(duration: int = 10) -> Dict[str, Any]:
     """
     Run a full mouse + keyboard monitoring session for the given duration.
-    Returns: { 'mouse_events': [...], 'keyboard_events': [...] }
+    Returns: { 'mouse_events': [...], 'keyboard_events': [...], 'app_switches': [...] }
     """
     global EXIT_FLAG
     EXIT_FLAG = False  # Reset flag
 
     print(f"\nStarting GUI action capture for {duration}s...\n")
 
-
     m_listener = start_mouse_listener()
     k_listener = start_keyboard_listener()
 
     try:
-        # Instead of blocking sleep, check flag in small intervals
         start_time = time.time()
         while time.time() - start_time < duration:
             if EXIT_FLAG:
                 print("⏹ Exit requested, stopping capture...")
                 break
-            time.sleep(0.1)  # Check every 100ms
+            time.sleep(0.1)
     except KeyboardInterrupt:
-        print("⏹Interrupted manually.")
+        print("Interrupted manually.")
 
     m_listener.stop()
     k_listener.stop()
+
+    app_switches = monitor_app_switches(duration)
 
     print(f"\nCapture complete: {len(mouse_events)} mouse events, {len(keyboard_events)} keyboard events.\n")
 
     return {
         "mouse_events": list(mouse_events),
-        "keyboard_events": list(keyboard_events)
+        "keyboard_events": list(keyboard_events),
+        "app_switches": app_switches
     }
 
 

@@ -20,6 +20,7 @@ from logger import get_logger
 from gui import run_sensor_session
 from interpreter import WorkflowInterpreter
 from heuristics.kb_mashing import SufferingDetector
+from heuristics.app_switching_detection import detect_app_switching_anomalies
 
 log = get_logger("PIPELINE")
 
@@ -294,6 +295,14 @@ def run_pipeline(duration=10, config=None):
                 'description': f"Keyboard mashing detected (score: {keyboard_mash_result['mash_score']:.2f})"
             })
             log.info(f"Keyboard mashing detected with score {keyboard_mash_result['mash_score']:.2f}")
+
+        # App switching anomalies
+        log.info("Running app switching anomaly detection")
+        app_switches = events.get("app_switches", [])
+        app_switch_alerts = detect_app_switching_anomalies(app_switches)
+        if app_switch_alerts:
+            all_alerts.extend(app_switch_alerts)
+            log.info(f"App switching detection: {len(app_switch_alerts)} alerts")
 
         # OCR cancellation detection
         try:
