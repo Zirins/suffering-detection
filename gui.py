@@ -206,6 +206,9 @@ def on_mouse_click(x: int, y: int, button: Button, pressed: bool) -> None:
     print(f"[{timestamp.strftime('%H:%M:%S')}] ACTION: {action_desc}")
 
 
+
+
+
 def start_mouse_listener() -> mouse.Listener:
     """Start the mouse listener thread."""
     listener = mouse.Listener(on_click=on_mouse_click)

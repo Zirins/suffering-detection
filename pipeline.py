@@ -403,7 +403,7 @@ def main():
     parser.add_argument(
         "--duration",
         type=int,
-        default=30,
+        default=10,
         help="Recording duration in seconds (default: 30)"
     )
     parser.add_argument(
