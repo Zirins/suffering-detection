@@ -22,6 +22,17 @@ from interpreter import WorkflowInterpreter
 from heuristics.kb_mashing import SufferingDetector
 from heuristics.app_switching_detection import detect_app_switching_anomalies
 from heuristics.cursor_thrashing_detection import detect_cursor_thrashing
+from heuristics.setting_state_queries import (
+    get_wifi_state,
+    get_bluetooth_state,
+    get_airplane_mode_state
+)
+from heuristics.toggle_detection import (
+    detect_setting_toggling,
+    detect_hardware_toggling
+)
+
+
 
 log = get_logger("PIPELINE")
 
@@ -327,6 +338,43 @@ def run_pipeline(duration=10, config=None):
 
         print(f"Detected {len(all_alerts)} anomalies")
         log.info(f"Detection complete: {len(all_alerts)} alerts")
+
+        # Toggle Detection
+        # WiFi
+        wifi_state = get_wifi_state()
+        wifi_alert = detect_setting_toggling("wifi", wifi_state)
+        if wifi_alert:
+            all_alerts.append(wifi_alert)
+
+        # Bluetooth
+        bt_state = get_bluetooth_state()
+        bt_alert = detect_setting_toggling("bluetooth", bt_state)
+        if bt_alert:
+            all_alerts.append(bt_alert)
+
+        # Airplane Mode
+        ap_state = get_airplane_mode_state()
+        ap_alert = detect_setting_toggling("airplane_mode", ap_state)
+        if ap_alert:
+            all_alerts.append(ap_alert)
+
+        # HARDWARE TOGGLING DETECTION
+        hw_alert = detect_hardware_toggling()
+        if hw_alert:
+            all_alerts.append(hw_alert)
+            log.info(f"Hardware toggling detected: {hw_alert}")
+
+
+
+
+
+
+
+
+
+
+
+
 
         # SAVE: Detection results
         alerts_file = config.alerts_dir / f"alerts_{timestamp}.json"
