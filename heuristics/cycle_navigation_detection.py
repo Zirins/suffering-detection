@@ -107,7 +107,7 @@ def analyze_workflow_directory(dir_path):
     return results
 
 
-# CLI (optional)
+# CLI optionall
 
 if __name__ == "__main__":
     import argparse

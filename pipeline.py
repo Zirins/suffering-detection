@@ -231,7 +231,7 @@ def run_pipeline(duration=10, config=None):
         keyboard_count = len(events.get('keyboard_events', []))
 
         if mouse_count == 0 and keyboard_count == 0:
-            print("\n⚠️  No data captured")
+            print("\n No data captured")
             log.info("No events captured")
             return None
 
