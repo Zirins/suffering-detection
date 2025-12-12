@@ -22,6 +22,8 @@ click_patterns = {}
 last_click_time = None
 last_click_pos = None
 app_switches = []
+mouse_movements = []
+
 
 
 # ----------------------------
@@ -206,12 +208,23 @@ def on_mouse_click(x: int, y: int, button: Button, pressed: bool) -> None:
     print(f"[{timestamp.strftime('%H:%M:%S')}] ACTION: {action_desc}")
 
 
+def on_mouse_move(x: int, y: int) -> None:
+    """Capture mouse movement with timestamp"""
+    event = {
+        "timestamp": datetime.now().isoformat(),
+        "type": "mouse_move",
+        "position": {"x": x, "y": y}
+    }
+    mouse_movements.append(event)
 
 
 
 def start_mouse_listener() -> mouse.Listener:
     """Start the mouse listener thread."""
-    listener = mouse.Listener(on_click=on_mouse_click)
+    listener = mouse.Listener(
+        on_click=on_mouse_click,
+        on_move=on_mouse_move
+    )
     listener.start()
     return listener
 
@@ -249,6 +262,7 @@ def on_key_release(key) -> None:
 def start_keyboard_listener() -> keyboard.Listener:
     """Start the keyboard listener thread."""
     listener = keyboard.Listener(on_press=on_key_press, on_release=on_key_release)
+
     listener.start()
     return listener
 
@@ -291,18 +305,25 @@ def monitor_apps_during_session(duration):
 # RUNNER WRAPPER (For Pipeline Integration)
 # ----------------------------
 
-def run_sensor_session(duration: int = 10) -> Dict[str, Any]:
-    """
-    Run a full mouse + keyboard monitoring session for the given duration.
-    Returns: { 'mouse_events': [...], 'keyboard_events': [...], 'app_switches': [...] }
-    """
-    global EXIT_FLAG
-    EXIT_FLAG = False  # Reset flag
+def run_sensor_session(duration: int = 10):
+    global EXIT_FLAG, app_switches
+    EXIT_FLAG = False
+    app_switches = []  # Reset
 
     print(f"\nStarting GUI action capture for {duration}s...\n")
 
-    m_listener = start_mouse_listener()
+    # Start listeners
+    m_listener = mouse.Listener(on_click=on_mouse_click, on_move=on_mouse_move)
+    m_listener.start()
+
     k_listener = start_keyboard_listener()
+
+    # NEW: Start app monitor in background thread
+    app_thread = threading.Thread(
+        target=lambda: monitor_apps_during_session(duration),
+        daemon=True
+    )
+    app_thread.start()
 
     try:
         start_time = time.time()
@@ -314,19 +335,23 @@ def run_sensor_session(duration: int = 10) -> Dict[str, Any]:
     except KeyboardInterrupt:
         print("Interrupted manually.")
 
+    # Stop all
     m_listener.stop()
     k_listener.stop()
+    app_thread.join(timeout=5)
 
-    app_switches = monitor_app_switches(duration)
-
-    print(f"\nCapture complete: {len(mouse_events)} mouse events, {len(keyboard_events)} keyboard events.\n")
+    print(f"\nCapture complete:")
+    print(f"  - {len(mouse_events)} mouse clicks")
+    print(f"  - {len(keyboard_events)} keyboard events")
+    print(f"  - {len(mouse_movements)} mouse movements")
+    print(f"  - {len(app_switches)} app switches\n")
 
     return {
         "mouse_events": list(mouse_events),
         "keyboard_events": list(keyboard_events),
-        "app_switches": app_switches
+        "mouse_movements": list(mouse_movements),
+        "app_switches": list(app_switches)
     }
-
 
 # ----------------------------
 # DEBUG MODE

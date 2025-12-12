@@ -21,6 +21,7 @@ from gui import run_sensor_session
 from interpreter import WorkflowInterpreter
 from heuristics.kb_mashing import SufferingDetector
 from heuristics.app_switching_detection import detect_app_switching_anomalies
+from heuristics.cursor_thrashing_detection import detect_cursor_thrashing
 
 log = get_logger("PIPELINE")
 
@@ -278,6 +279,12 @@ def run_pipeline(duration=10, config=None):
 
         # Mouse event heuristics
         all_alerts = detect_with_heuristics(events.get("mouse_events", []), config=config)
+
+        # Cursor thrashing detection
+        cursor_alerts = detect_cursor_thrashing(events.get("mouse_movements", []))
+        if cursor_alerts:
+            all_alerts.extend(cursor_alerts)
+            log.info(f"Cursor thrashing detected: {len(cursor_alerts)} alerts")
 
         # Keyboard mashing detection
         log.info("Starting keyboard mashing detection")
