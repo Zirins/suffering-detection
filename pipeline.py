@@ -22,6 +22,7 @@ from interpreter import WorkflowInterpreter
 from heuristics.kb_mashing import SufferingDetector
 from heuristics.app_switching_detection import detect_app_switching_anomalies
 from heuristics.cursor_thrashing_detection import detect_cursor_thrashing
+from heuristics.cycle_navigation_detection import analyze_workflow_file
 from heuristics.setting_state_queries import (
     get_wifi_state,
     get_bluetooth_state,
@@ -340,6 +341,7 @@ def run_pipeline(duration=10, config=None):
         log.info(f"Detection complete: {len(all_alerts)} alerts")
 
         # Toggle Detection
+
         # WiFi
         wifi_state = get_wifi_state()
         wifi_alert = detect_setting_toggling("wifi", wifi_state)
@@ -364,9 +366,11 @@ def run_pipeline(duration=10, config=None):
             all_alerts.append(hw_alert)
             log.info(f"Hardware toggling detected: {hw_alert}")
 
-
-
-
+        # CYCLICAL NAVIGATION DETECTION
+        cycle_alerts = analyze_workflow_file(workflow_file)
+        if cycle_alerts:
+            all_alerts.extend(cycle_alerts)
+            log.info(f"Cyclical navigation alerts: {len(cycle_alerts)} detected")
 
 
 
